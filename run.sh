@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Usage: ./run.sh <service_name> <release_version> <user_name>
+
 SERVICE_NAME=$1
 RELEASE_VERSION=$2
 USER_NAME=$3
@@ -32,7 +33,6 @@ protoc --go_out=./golang/${SERVICE_NAME} \
 --proto_path="$PROTO_DIR" \
 "$PROTO_DIR"/*.proto
 
-# ejecuta el comando tree para ver la estructura de archivos 
 tree 
 
 cd golang/${SERVICE_NAME}
