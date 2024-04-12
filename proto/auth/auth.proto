@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package auth;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+// These annotations are used when generating the OpenAPI file.
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {version: "1.0"};
+  external_docs: {
+    url: "https://github.com/diofanto33/cocosette-api-gateway";
+    description: "gRPC-gateway documentation for the Cocosette APP";
+  }
+  schemes: HTTPS;
+};
+
+service AuthService {
+    rpc Register(RegisterRequest) returns (RegisterResponse) {
+        option (google.api.http) = {
+            post: "/register"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Add a user"
+            description: "Add a user to the server."
+            tags: "Users"
+        };
+    }
+    rpc Login(LoginRequest) returns (LoginResponse) {
+        option (google.api.http) = {
+            post: "/login"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Login"
+            description: "Login to the server."
+            tags: "Users"
+        };
+    }
+    rpc Validate(ValidateRequest) returns (ValidateResponse) {
+        option (google.api.http) = {
+            post: "/validate"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Validate"
+            description: "Validate a token."
+            tags: "Users"
+        };
+    }
+}
+
+// Messages 
+
+message RegisterRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message RegisterResponse {}
+
+message LoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    string token = 1;
+}
+
+message ValidateRequest { 
+    string token = 1; 
+}
+
+message ValidateResponse {
+    int64 userId = 1;
+}
